@@ -18,7 +18,8 @@ echo "Checkout the tag from upstream"
 git checkout tags/$uptag
 
 echo "Create a new brach for editing"
-git checkout -b $branch_name
+git checkout -b $branch_name || git checkout $branch_name
+# If the branch already exists, checkout that branch and copy the latest Github action scripts
 
 echo "Copy the Github actions from build branch"
 for i in build-bin nightly-build
