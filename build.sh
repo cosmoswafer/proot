@@ -22,6 +22,7 @@ git checkout -b $branch_name || git checkout $branch_name
 # If the branch already exists, checkout that branch and copy the latest Github action scripts
 
 echo "Copy the Github actions from build branch"
+[ ! -d .github/workflows ] && mkdir -pv .github/workflows
 for i in build-bin nightly-build
 do
     action_yml=".github/workflows/$i.yml"
