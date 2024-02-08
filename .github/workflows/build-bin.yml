@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
     - name: Check out the code
       uses: actions/checkout@v3
@@ -39,9 +39,9 @@ jobs:
       with:
         name: dist
         path: proot.tar.gz
-        
-  build:
-    runs-on: ubuntu-22.04
+
+  buildf:
+    runs-on: ubuntu-20.04
     steps:
     - name: Check out the code
       uses: actions/checkout@v3
@@ -65,18 +65,18 @@ jobs:
     - name: Create a package
       run: |
         mv src/proot ./proot
-        tar -zcvf ./proot-jammy.tar.gz proot
+        tar -zcvf ./proot-focal.tar.gz proot
         ls -lhrt
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
         name: dist
-        path: proot-jammy.tar.gz
+        path: proot-focal.tar.gz
 
   release:
     needs: build
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Download Artifact
         uses: actions/download-artifact@v2
@@ -102,3 +102,13 @@ jobs:
           asset_path: ./proot.tar.gz
           asset_name: proot.tar.gz
           asset_content_type: application/octet-stream
+      - name: Upload Release Asset Focal
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./proot-focal.tar.gz
+          asset_name: proot-focal.tar.gz
+          asset_content_type: application/octet-stream
+      
