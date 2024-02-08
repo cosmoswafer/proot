@@ -1,16 +1,13 @@
-name: Nightly build
+name: Release build for Ubuntu Jammy
 
 on:
   push:
-    branches:
-      - master
-      - main-build
-      - 'build-*'
+    tags:
+      - 'v*'
 
 jobs:
   build:
-    if: true
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - name: Check out the code
       uses: actions/checkout@v3
@@ -34,14 +31,14 @@ jobs:
     - name: Create a package
       run: |
         mv src/proot ./proot
-        tar -zcvf ./proot.tar.gz proot
+        tar -zcvf ./proot-jammy.tar.gz proot
         ls -lhrt
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
         name: dist
-        path: proot.tar.gz
+        path: proot-jammy.tar.gz
 
   release:
     needs: build
@@ -58,16 +55,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CURRENT_DATE: ${{ github.event.push.timestamp }}
         with:
-          tag_name: nightly-${{ github.run_number }}
-          release_name: Nightly Build ${{ env.CURRENT_DATE }}
+          tag_name: ${{ github.ref_name }}
+          release_name: Release ${{ github.ref_name }}
           draft: false
-          prerelease: true
+          prerelease: false
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./proot.tar.gz
-          asset_name: proot.tar.gz
+          asset_path: ./proot-jammy.tar.gz
+          asset_name: proot-jammy.tar.gz
           asset_content_type: application/octet-stream
