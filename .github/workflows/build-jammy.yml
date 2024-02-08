@@ -1,4 +1,4 @@
-name: Release build for Ubuntu Jammy
+name: Jammy build
 
 on:
   push:
