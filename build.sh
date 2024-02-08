@@ -8,7 +8,7 @@ echo "Usage: ./build.sh v5.4.0"
 #INPUT VARIABLES
 uptag="$1"
 [ "$2" ] && bn="$2" || bn="b1"
-branch_name="build-${uptag:}"
+branch_name="build-${uptag:1}"
 tag_name="$uptag-$bn"
 
 #CONFIGURATION VARIABLES
