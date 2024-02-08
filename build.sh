@@ -29,7 +29,8 @@ do
 done
 
 echo "Commit the changes"
-git commit -am "Added the build actions"
+git add .github/workflows/*.yml
+git commit -m "Added the build actions"
 
 echo "Push to Github"
 git push origin $branch_name
