@@ -24,7 +24,7 @@ echo "Copy the Github actions from build branch"
 for i in build-bin nightly-build
 do
     action_yml=".github/workflows/$i.yml"
-    git show $build_branch:$action_yml
+    git show $build_branch:$action_yml > $action_yml
     echo "Copied $action_yml"
 done
 
@@ -38,4 +38,6 @@ echo "Create a tag for release and push to Github"
 git tag $tag_name
 git push --tags
 
-echo "Done. Please check the Github action results on the website"
+echo "Done. Please check the Github action results on the website."
+git checkout $build_branch
+echo "Switched back to build branch"
