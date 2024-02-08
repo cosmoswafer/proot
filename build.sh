@@ -23,7 +23,7 @@ git checkout -b $branch_name || git checkout $branch_name
 
 echo "Copy the Github actions from build branch"
 [ ! -d .github/workflows ] && mkdir -pv .github/workflows
-for i in bin nightly jammy
+for i in bin nightly
 do
     action_yml=".github/workflows/build-$i.yml"
     git show $build_branch:$action_yml > $action_yml
