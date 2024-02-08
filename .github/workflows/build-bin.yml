@@ -75,7 +75,9 @@ jobs:
         path: proot-focal.tar.gz
 
   release:
-    needs: build
+    needs: 
+      - build
+      - buildf
     runs-on: ubuntu-latest
     steps:
       - name: Download Artifact
