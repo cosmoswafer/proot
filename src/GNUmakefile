@@ -23,7 +23,7 @@ HAS_PYTHON_CONFIG := $(shell ${PYTHON}-config --ldflags ${PYTHON_EMBED} 2>/dev/n
 CPPFLAGS += -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -I. -I$(VPATH) -I$(VPATH)/../lib/uthash/include
 CFLAGS   += -g -Wall -Wextra -O2
 CFLAGS   += $(shell pkg-config --cflags talloc)
-LDFLAGS  += -Wl,-z,noexecstack -static
+LDFLAGS  += -Wl,-z,noexecstack -static -static
 LDFLAGS  += $(shell pkg-config --libs talloc)
 
 CARE_LDFLAGS  = $(shell pkg-config --libs libarchive)
