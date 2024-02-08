@@ -30,6 +30,10 @@ do
     echo "Copied $action_yml"
 done
 
+echo "Patch the makefile and do static linking"
+sed -i 's/LDFLAGS  += -Wl,-z,noexecstack/LDFLAGS  += -Wl,-z,noexecstack -static/' src/GNUmakefile
+
+
 echo "Commit the changes"
 git add .github/workflows/*.yml
 git commit -m "Added the build actions"
