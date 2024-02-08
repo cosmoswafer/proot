@@ -29,13 +29,13 @@ do
     git show $build_branch:$action_yml > $action_yml
     echo "Copied $action_yml"
 done
+git add .github/workflows/*.yml
 
 echo "Patch the makefile and do static linking"
 sed -i 's/LDFLAGS  += -Wl,-z,noexecstack/LDFLAGS  += -Wl,-z,noexecstack -static/' src/GNUmakefile
-
+git add src/GNUmakefile
 
 echo "Commit the changes"
-git add .github/workflows/*.yml
 git commit -m "Added the build actions"
 
 echo "Push to Github"
